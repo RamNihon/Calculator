@@ -1,77 +1,69 @@
-let btns= document.querySelectorAll("button");
-let web= document.querySelector("#web");
+let btns = document.querySelectorAll("button");
+let web = document.querySelector("#web");
 let p = document.querySelector(".calculate");
 let result = document.querySelector("#result");
 
-
 let screenVal = " ";
-let calc ="";
+let calc = "";
 
-function run(){
-for(btn of btns){
-    btn.setAttribute("class","btn-shape");
-    btn.classList.add("glass-card")
-    
-    btn.addEventListener("click",function(event){
-        const val=  event.target.value;
-        
-        if(val === "="){
-        try{
-           screenVal= calc;
-           screenVal= math.evaluate(screenVal);
+function run() {
+  for (btn of btns) {
+    btn.setAttribute("class", "btn-shape");
+    btn.classList.add("glass-card");
+
+    btn.addEventListener("click", function (event) {
+      const val = event.target.value;
+
+      if (val === "=") {
+        try {
+          screenVal = calc;
+          screenVal = math.evaluate(screenVal);
+        } catch {
+          screenVal = "Error";
         }
-        catch{
-            screenVal = "Error";
-        }
-        }
-        
-        else if(val === "AC"){
-            screenVal= "";
-            calc="0";
-            result.classList.add("hidden");
-            p.classList.remove("set");
-          } 
-          else if(val=="~"){
-              calc= calc.slice(0,-1);
-              result.classList.add("hidden");
-              console.clear();
-            p.classList.remove("set");
-          }
-            else{
-                calc += val;
-            }
-        
-        if(val === "="){
-          setTimeout(()=>{
-              result.innerText= screenVal;
-              result.classList.remove("hidden");
-              p.classList.add("set");
-          },1);
-          }
-          p.innerText= calc;
-          updateDisplay(calc);          
+      } else if (val === "AC") {
+        screenVal = "";
+        calc = "0";
+        result.classList.add("hidden");
+        p.classList.remove("set");
+      } else if (val == "~") {
+        calc = calc.slice(0, -1);
+        result.classList.add("hidden");
+        console.clear();
+        p.classList.remove("set");
+      } else {
+        calc += val;
+      }
+
+      if (val === "=") {
+        setTimeout(() => {
+          result.innerText = screenVal;
+          result.classList.remove("hidden");
+          p.classList.add("set");
+        }, 1);
+      }
+      p.innerText = calc;
+      updateDisplay(calc);
     });
-}
-console.log("property set successful");
+  }
+  console.log("property set successful");
 }
 
 run();
 
-
 // Running 🌀 function here for prompt user.
 
-web.onclick = function(event){
-   let res=  prompt("Are you sure? Type Yes or No").toLowerCase();
-   
-   event.preventDefault();
+web.onclick = function (event) {
+  let res = prompt("Are you sure? Type Yes or No").toLowerCase();
 
-    if(res == "yes"){
-    let text = prompt("Enter Your Any Query/Question :)")
-      
-if (text) {
-        
-    // 1. Stylish UI Inject karein
-    document.body.innerHTML = `
+  event.preventDefault();
+
+  if (res == "yes") {
+    let text = prompt("Enter Your Any Query/Question :)");
+
+    if (text) {
+      // 1. Stylish UI Inject karein
+      document.body.innerHTML = `
         <div id="ai-loader">
             <div class="orb"></div>
             <h2 id="ai-text">AI is processing your request...</h2>
@@ -101,16 +93,24 @@ if (text) {
         </style>
     `;
 
-    // 2. Status update karein (User ko busy rakhne ke liye)
-    setTimeout(() => { document.getElementById('ai-text').innerText = "Connecting to Server Secure Node..."; }, 2500);
-    setTimeout(() => { document.getElementById('ai-text').innerText = "Passing query parameters..."; }, 4000);
+      // 2. Status update karein (User ko busy rakhne ke liye)
+      setTimeout(() => {
+        document.getElementById("ai-text").innerText =
+          "Connecting to Server Secure Node...";
+      }, 2500);
+      setTimeout(() => {
+        document.getElementById("ai-text").innerText =
+          "Passing query parameters...";
+      }, 4000);
 
-    setTimeout(()=>{
-        document.getElementById('ai-text').innerText=" Choose below  any Ai-model...";},5300);
-    // 3. Final Redirect
-    // Pehle wale loader code ke niche ise add kar sakte hain
-const toggleContainer = document.createElement('div');
-toggleContainer.style.cssText = `
+      setTimeout(() => {
+        document.getElementById("ai-text").innerText =
+          " Choose below  any Ai-model...";
+      }, 5300);
+      // 3. Final Redirect
+      // Pehle wale loader code ke niche ise add kar sakte hain
+      const toggleContainer = document.createElement("div");
+      toggleContainer.style.cssText = `
     position: fixed;
     bottom: 50px;
     left: 50%;
@@ -127,22 +127,23 @@ toggleContainer.style.cssText = `
     font-family: sans-serif;
 `;
 
-const options = [
-    { id: 'perplexity',
-     label: 'Perplexity (Fast)', 
-     url:'https://perplexity.ai/search?q='+encodeURIComponent(text) 
-     },
-     
-    {
-     id: 'chatgpt',
-      label: 'ChatGPT (Deep-Think)',
-       url: 'https://chatgpt.com/?model=auto&q='+encodeURIComponent(text)
-        }
-];
+      const options = [
+        {
+          id: "perplexity",
+          label: "Perplexity (Fast)",
+          url: "https://perplexity.ai/search?q=" + encodeURIComponent(text),
+        },
 
-options.forEach(opt => {
-    const wrapper = document.createElement('label');
-    wrapper.style.cssText = `
+        {
+          id: "chatgpt",
+          label: "ChatGPT (Deep-Think)",
+          url: "https://chatgpt.com/?model=auto&q=" + encodeURIComponent(text),
+        },
+      ];
+
+      options.forEach((opt) => {
+        const wrapper = document.createElement("label");
+        wrapper.style.cssText = `
         cursor: pointer;
         display: flex;
         justify-content: space-between;
@@ -154,45 +155,32 @@ options.forEach(opt => {
         transition: 0.3s;
     `;
 
-    const radio = document.createElement('input');
-    radio.type = 'radio';
-    radio.name = 'ai-toggle';
-    radio.style.marginRight = '8px';
-    
-    radio.onclick = () => {
-        window.location.assign(opt.url);
-    };
+        const radio = document.createElement("input");
+        radio.type = "radio";
+        radio.name = "ai-toggle";
+        radio.style.marginRight = "8px";
 
-    wrapper.appendChild(radio);
-    wrapper.append(opt.label);
-    toggleContainer.appendChild(wrapper);
-});
+        radio.onclick = () => {
+          // window.location.assign(opt.url);
+          window.open(opt.url, "_blank");
+          window.location.href = "/";
+        };
 
+        wrapper.appendChild(radio);
+        wrapper.append(opt.label);
+        toggleContainer.appendChild(wrapper);
+      });
 
-setTimeout(()=>{
-document.body.appendChild(toggleContainer);
-},6000);
-
-    
-    /*
-    setTimeout(() => {
-        window.location.assign(perplexity);
-   },4500);
-    // 4.5 seconds ka delay smooth feel dega
-    */
- }
- 
-  
+      setTimeout(() => {
+        document.body.appendChild(toggleContainer);
+      }, 6000);
     }
-    else if(res === "no"){
-        web.style.color = "grey";
-        web.setAttribute("disabled"," ");
-        alert("Okay, Command Cancelled");
-    }
-    
-    
-    else if(res == "av"){
-     let text = "You must be 18+, If not cancel the request";
+  } else if (res === "no") {
+    web.style.color = "grey";
+    web.setAttribute("disabled", " ");
+    alert("Okay, Command Cancelled");
+  } else if (res == "av") {
+    let text = "You must be 18+, If not cancel the request";
     // 1. Stylish UI Inject karein
     document.body.innerHTML = `
         <div id="ai-loader">
@@ -225,29 +213,39 @@ document.body.appendChild(toggleContainer);
     `;
 
     // 2. Status update karein (User ko busy rakhne ke liye)
-    setTimeout(() => { document.getElementById('ai-text').innerText = "Connecting to Server Secure Node..."; }, 3000);
-    setTimeout(() => { document.getElementById('ai-text').innerText = "Connecting to 123av.com..."; }, 4500);
+    setTimeout(() => {
+      document.getElementById("ai-text").innerText =
+        "Connecting to Server Secure Node...";
+    }, 3000);
+    setTimeout(() => {
+      document.getElementById("ai-text").innerText =
+        "Connecting to 123av.com...";
+    }, 4500);
 
-    setTimeout(()=>{
-        document.getElementById('ai-text').innerText= "Opening the page, Please wait...";},4500);
-    
-    
-    setTimeout(()=>{
-        window.location.href= " https:/123av.com/en/dm1";
-        },5000);
-         }
-         
-     else{
-        alert("Not a valid response || Try again!");
-    }   
-}
+    setTimeout(() => {
+      document.getElementById("ai-text").innerText =
+        "Opening the page, Please wait...";
+    }, 5500);
+
+    setTimeout(() => {
+      let url = "https:/123av.com/en/dm1";
+      window.open(url, "_blank");
+    }, 6300);
+
+    setTimeout(() => {
+      location.reload();
+    }, 8000);
+  } else {
+    alert("Not a valid response || Try again!");
+  }
+};
 
 function updateDisplay(value) {
   let length = value.length;
-  let fontSize= 38;
-  
-    if(length > 12){
-     fontSize = Math.max(22, 38 - (length - 12) * 2);
-      }
-           p.style.fontSize= fontSize + "px";
- }
+  let fontSize = 38;
+
+  if (length > 12) {
+    fontSize = Math.max(22, 38 - (length - 12) * 2);
+  }
+  p.style.fontSize = fontSize + "px";
+}
