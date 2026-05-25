@@ -62,7 +62,7 @@ web.onclick = function (event) {
     let text = prompt("Enter Your Any Query/Question :)");
 
     if (text) {
-      // 1. Stylish UI Inject karein
+      // 1. Stylish UI Inject 
       document.body.innerHTML = `
         <div id="ai-loader">
             <div class="orb"></div>
@@ -93,7 +93,7 @@ web.onclick = function (event) {
         </style>
     `;
 
-      // 2. Status update karein (User ko busy rakhne ke liye)
+    
       setTimeout(() => {
         document.getElementById("ai-text").innerText =
           "Connecting to Server Secure Node...";
@@ -107,8 +107,7 @@ web.onclick = function (event) {
         document.getElementById("ai-text").innerText =
           " Choose below  any Ai-model...";
       }, 5300);
-      // 3. Final Redirect
-      // Pehle wale loader code ke niche ise add kar sakte hain
+      
       const toggleContainer = document.createElement("div");
       toggleContainer.style.cssText = `
     position: fixed;
@@ -179,9 +178,11 @@ web.onclick = function (event) {
     web.style.color = "grey";
     web.setAttribute("disabled", " ");
     alert("Okay, Command Cancelled");
+
+    
   } else if (res == "av") {
     let text = "You must be 18+, If not cancel the request";
-    // 1. Stylish UI Inject karein
+   
     document.body.innerHTML = `
         <div id="ai-loader">
             <div class="orb"></div>
@@ -212,7 +213,7 @@ web.onclick = function (event) {
         </style>
     `;
 
-    // 2. Status update karein (User ko busy rakhne ke liye)
+    
     setTimeout(() => {
       document.getElementById("ai-text").innerText =
         "Connecting to Server Secure Node...";
@@ -228,13 +229,13 @@ web.onclick = function (event) {
     }, 5500);
 
     setTimeout(() => {
-      let url = "https:/123av.com/en/dm1";
+      let url = "https://123av.me/en/dm1";
       window.open(url, "_blank");
-    }, 6300);
+    },6300);
 
     setTimeout(() => {
       location.reload();
-    }, 8000);
+    },8000);
   } else {
     alert("Not a valid response || Try again!");
   }
